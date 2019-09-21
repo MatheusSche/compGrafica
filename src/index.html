@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> <%= htmlWebpackPlugin.options.title %> </title>
+  <meta name="viewport" content="width=device-width,initial- scale=1"> 
+</head>
+<body>
+  <main class="main">
+    <div class="main__canvas-container">
+      <canvas id="main__canvas" class="main__canvas"></canvas>
+    </div>
+
+    <div class="container">
+      <div class="form-group">
+        <label for="">Escolha um demo:</label>
+        <select class="form-control" name="demo-picker" id="demo-picker">
+          <option value="static-triangle">Triângulo Estático</option>
+          <option value="triangle-translation">Translação do Triângulo</option>
+          <option value="triangle-aspect-ratio">Corrigindo Proporção (Aspect Ratio)</option>
+          <option value="spinning-triangle">Girando o Triângulo</option>
+          <option value="spinning-square">Girando um Quadrado</option>
+          <option value="spinning-triangle-shader">Girando o Triângulo no Shader</option>
+          <option value="interactive-triangle-translation">Movendo com Setas</option>
+          <option value="movable-spinning-triangle">Girando o Triângulo e Movendo com Setas</option>
+          <option value="simple-cube">Cubo Estático</option>
+        </select>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
