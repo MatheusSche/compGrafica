@@ -9,6 +9,10 @@ import { MovableSpinningTriangle } from './app/movable-spinning-triangle';
 import { InteractiveTriangleTranslation } from './app/interactive-triangle-translation';
 import { SpinningSquare } from './app/spinning-square';
 import { StaticCube } from './app/static-cube';
+import { CubeSpinX } from './app/spinningx-cube';
+import { CubeSpinY } from './app/spinningy-cube';
+import { CubeSpinXY } from './app/spinningxy-cube';
+import { InteractiveCubeSpin } from './app/movable-spinning-cube';
 
 const canvas = document.querySelector<HTMLCanvasElement>('.main__canvas');
 
@@ -79,6 +83,34 @@ document.getElementById('demo-picker').addEventListener('change', async d => {
         currentApp.run();
         return;
     }
+    
+    if(selection.localeCompare('spinningx-cube')===0){
+        await currentApp.stop();
+        currentApp = new CubeSpinX(canvas);
+        currentApp.run();
+        return;
+    }
+    
+    if(selection.localeCompare('spinningy-cube')===0){
+        await currentApp.stop();
+        currentApp = new CubeSpinY(canvas);
+        currentApp.run();
+        return;
+    }
+    if(selection.localeCompare('spinningxy-cube')===0){
+        await currentApp.stop();
+        currentApp = new CubeSpinXY(canvas);
+        currentApp.run();
+        return;
+    }
+
+    if(selection.localeCompare('movable-spinning-cube')===0){
+        await currentApp.stop();
+        currentApp = new InteractiveCubeSpin(canvas);
+        currentApp.run();
+        return;
+    }
+      
 });
 
 // const main = new StaticTriangle(canvas);

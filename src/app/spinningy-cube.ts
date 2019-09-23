@@ -2,7 +2,7 @@ import { ShaderProgram } from './webgl/shader-program';
 import { BasicApp } from './basic-app';
 import { MyMath } from './webgl/my-math';
 
-export class StaticCube implements BasicApp {
+export class CubeSpinY implements BasicApp {
 
     private gl: WebGL2RenderingContext;    
     private width: number;
@@ -34,10 +34,10 @@ export class StaticCube implements BasicApp {
 
         let vsText: string, fsText: string;
         try {
-            const vs = await fetch('../assets/shaders/static-cube/basic.vert');
+            const vs = await fetch('../assets/shaders/spinningx-cube/basic.vert');
             vsText = await vs.text();
 
-            const fs = await fetch('../assets/shaders/static-cube/basic.frag');
+            const fs = await fetch('../assets/shaders/spinningx-cube/basic.frag');
             fsText = await fs.text();
         } catch (e) {
             console.log(e);
@@ -218,24 +218,14 @@ export class StaticCube implements BasicApp {
         //Radian convert
         const degree = Math.PI / 180;
 
-        //const matWorldUniformLocation = this.gl.getUniformLocation(this.shaderProgram, 'mWorld');
-        //const matViewdUniformLocation = this.gl.getUniformLocation(this.shaderProgram, 'mView');
-        //const matProjUniformLocation = this.gl.getUniformLocation(this.shaderProgram, 'mProj');
+        const angle = performance.now()/1000/6*2*Math.PI;
+    
 
-
-        
-        //const worldMatrix = new Float32Array(16);
-        //const viewMatrix = new Float32Array(16);
-        //const projMatrix = new Float32Array(16);
-
-        const worldMatrix = MyMath.identity_matrix();
+        var worldMatrix = MyMath.identity_matrix();
         const viewMatrix =  MyMath.lookAt([0,0,-8], [0,0,0],[0,1,0]);
         const projMatrix = MyMath.perspective(45*degree, this.width/this.height, 0.1, 100.0);
 
-        //this.shaderProgram.setUniformMatrix4fv('mWorld', worldMatrix);    // pass transformation matrix
-        //this.shaderProgram.setUniformMatrix4fv('mView', viewMatrix);    // pass transformation matrix
-        //this.shaderProgram.setUniformMatrix4fv('mProj', projMatrix);    // pass transformation matrix
-
+        const identity_mat = MyMath.identity_matrix();
         
         // Tell WebGL how to convert from clip space to pixels
         this.gl.viewport(0, 0, this.width, this.height);
@@ -254,6 +244,11 @@ export class StaticCube implements BasicApp {
         this.shaderProgram.setUniformMatrix4fv('mView', viewMatrix);    // pass transformation matrix
         this.shaderProgram.setUniformMatrix4fv('mProj', projMatrix);    // pass transformation matrix
 
+        worldMatrix = MyMath.rotateY3D(identity_mat, angle);
+
+        this.shaderProgram.setUniformMatrix4fv('mWorld', worldMatrix);
+        
+        
         this.gl.bindVertexArray(this.cubeVAO);      // tell WebGL we want to draw the triangle
         this.gl.drawElements(this.gl.TRIANGLES, 36, this.gl.UNSIGNED_INT, 0);    // params: primitive type, offset, count        
 
